@@ -112,7 +112,7 @@ export function useUploadService(): UploadService {
             );
 
             const response = await fetch(
-                "https://rental.toline-angola.com/api/transactions/upload",
+                "https://rental-reconcile-api-latest.onrender.com/api/transactions/upload",
                 {
                     method: "POST",
                     body: formData,
@@ -145,7 +145,7 @@ export function useUploadService(): UploadService {
         setIsDownloading(true);
         try {
             const response = await fetch(
-                `https://rental.toline-angola.com/api/reports/download/${reportName}`,
+                `https://rental-reconcile-api-latest.onrender.com/api/reports/download/${reportName}`,
                 {
                     method: "GET",
                 }
@@ -169,6 +169,12 @@ export function useUploadService(): UploadService {
             // Clean up
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
+            await fetch(
+                "https://rental-reconcile-api-latest.onrender.com/transactions/clean",
+                {
+                    method: "DELETE",
+                }
+            );
 
             console.log(`✅ Report downloaded successfully: ${reportName}`);
         } catch (error) {
