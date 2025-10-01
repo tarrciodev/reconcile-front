@@ -61,7 +61,6 @@ export default function ReconciliationDashboard() {
                     form={form}
                     handleUploadFiles={handleUploadFiles}
                 />
-                Processing Status
                 {isSubmitted && !isSubmitting && (
                     <ResultSection
                         filesLength={0}

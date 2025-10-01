@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { ReconciliationResult } from "@/services/upload-service";
-import { AlertCircle, CheckCircle, Download, FileText } from "lucide-react";
+import { AlertCircle, CheckCircle, Download } from "lucide-react";
 import React from "react";
 
 // Tipos devem ser importados ou definidos aqui
@@ -42,20 +42,6 @@ export const ResultSection: React.FC<ResultSectionProps> = ({
             <CardContent className='space-y-6'>
                 {/* Summary Cards */}
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-                    <div className='bg-blue-light rounded-lg p-4'>
-                        <div className='flex items-center justify-between'>
-                            <div>
-                                <p className='text-sm font-medium text-blue'>
-                                    Total da Empresa
-                                </p>
-                                <p className='text-2xl font-bold text-blue'>
-                                    {result?.totalCompanyTransactions}
-                                </p>
-                            </div>
-                            <FileText className='w-8 h-8 text-blue' />
-                        </div>
-                    </div>
-
                     <div className='bg-green-100 rounded-lg p-4'>
                         <div className='flex items-center justify-between'>
                             <div>

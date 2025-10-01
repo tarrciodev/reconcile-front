@@ -8,12 +8,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormDataProps, FormProps } from "@/services/upload-service";
 import { Upload } from "lucide-react";
-
-// Tipos devem ser importados ou definidos aqui
 
 interface FileUploadSectionProps {
     isSubmitting: boolean;
@@ -26,6 +24,12 @@ export function FileUploadSection({
     isSubmitting,
     handleUploadFiles,
 }: FileUploadSectionProps) {
+    // 1. Obter o isValid do formState
+    const { isValid } = form.formState;
+
+    // A lógica para desativar o botão será:
+    // disabled = isSubmitting OU !isValid
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleUploadFiles)}>
@@ -41,44 +45,54 @@ export function FileUploadSection({
                         </CardDescription>
                     </CardHeader>
                     <CardContent className='space-y-6'>
-                        {/* File Upload Area */}
-                        <div className='relative border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-orange/50 transition-colors cursor-pointer bg-muted/30'>
-                            <Input
-                                type='file'
-                                multiple
-                                name='files'
-                                onChange={(e) => {
-                                    const files = e.target.files;
-                                    if (!files) return;
-                                    const filesArray = Array.from(files);
-                                    form.setValue("files", filesArray);
-                                }}
-                                accept='.xlsx,.xls,.pdf'
-                                className='absolute inset-0 w-full h-full opacity-0 cursor-pointer'
-                            />
-                            <div className='space-y-4'>
-                                <div className='w-16 h-16 mx-auto bg-orange-light rounded-full flex items-center justify-center'>
-                                    <Upload className='w-8 h-8 text-orange' />
-                                </div>
-                                <div>
-                                    <p className='text-lg font-medium text-foreground'>
-                                        Arraste arquivos aqui
-                                    </p>
-                                    <p className='text-sm text-muted-foreground'>
-                                        ou clique para selecionar
-                                    </p>
-                                </div>
-                                <p className='text-xs text-muted-foreground'>
-                                    Suporta arquivos Excel (.xlsx, .xls) e PDF
-                                    até 10MB cada
-                                </p>
-                            </div>
-                        </div>
+                        {/* File Upload Area (Mantido o código FormField que está correto) */}
+                        <FormField
+                            control={form.control}
+                            name='files'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <div className='relative border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-orange/50 transition-colors cursor-pointer bg-muted/30'>
+                                        <Input
+                                            type='file'
+                                            multiple
+                                            accept='.xlsx,.xls,.pdf'
+                                            className='absolute inset-0 w-full h-full opacity-0 cursor-pointer'
+                                            onChange={(e) => {
+                                                const files = e.target.files;
+                                                if (!files) return;
+                                                const filesArray =
+                                                    Array.from(files);
+                                                field.onChange(filesArray); // conecta com RHF
+                                            }}
+                                        />
+                                        <div className='space-y-4'>
+                                            <div className='w-16 h-16 mx-auto bg-orange-light rounded-full flex items-center justify-center'>
+                                                <Upload className='w-8 h-8 text-orange' />
+                                            </div>
+                                            <div>
+                                                <p className='text-lg font-medium text-foreground'>
+                                                    Arraste arquivos aqui
+                                                </p>
+                                                <p className='text-sm text-muted-foreground'>
+                                                    ou clique para selecionar
+                                                </p>
+                                            </div>
+                                            <p className='text-xs text-muted-foreground'>
+                                                Suporta arquivos Excel (.xlsx,
+                                                .xls) e PDF até 10MB cada
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <FormMessage />{" "}
+                                </FormItem>
+                            )}
+                        />
 
                         {/* Process Button */}
                         <Button
                             type='submit'
-                            disabled={isSubmitting}
+                            // 2. O botão é desativado se estiver a submeter OU se o formulário não for válido
+                            disabled={isSubmitting || !isValid}
                             className='w-full bg-orange hover:bg-orange/90 text-white font-medium py-3 text-base'
                             size='lg'
                         >

@@ -112,7 +112,7 @@ export function useUploadService(): UploadService {
             );
 
             const response = await fetch(
-                "http://localhost:8080/api/transactions/upload",
+                "https://rental.toline-angola.com/api/transactions/upload",
                 {
                     method: "POST",
                     body: formData,
@@ -145,7 +145,7 @@ export function useUploadService(): UploadService {
         setIsDownloading(true);
         try {
             const response = await fetch(
-                `http://localhost:8080/api/reports/download/${reportName}`,
+                `https://rental.toline-angola.com/api/reports/download/${reportName}`,
                 {
                     method: "GET",
                 }
