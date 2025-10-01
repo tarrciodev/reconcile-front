@@ -1,4 +1,5 @@
 "use client";
+import { BASE_URL } from "@/config/define-url";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -112,7 +113,7 @@ export function useUploadService(): UploadService {
             );
 
             const response = await fetch(
-                "https://rental-reconcile-api-latest.onrender.com/api/transactions/upload",
+                `${BASE_URL}/api/transactions/upload`,
                 {
                     method: "POST",
                     body: formData,
@@ -145,7 +146,7 @@ export function useUploadService(): UploadService {
         setIsDownloading(true);
         try {
             const response = await fetch(
-                `https://rental-reconcile-api-latest.onrender.com/api/reports/download/${reportName}`,
+                `${BASE_URL}/api/reports/download/${reportName}`,
                 {
                     method: "GET",
                 }
@@ -169,12 +170,9 @@ export function useUploadService(): UploadService {
             // Clean up
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
-            await fetch(
-                "https://rental-reconcile-api-latest.onrender.com/transactions/clean",
-                {
-                    method: "DELETE",
-                }
-            );
+            await fetch(`${BASE_URL}/transactions/clean`, {
+                method: "DELETE",
+            });
 
             console.log(`✅ Report downloaded successfully: ${reportName}`);
         } catch (error) {
