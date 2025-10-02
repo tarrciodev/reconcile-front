@@ -1,4 +1,5 @@
 "use client";
+import { TerminalAnimated } from "@/components/terminal";
 import { useUploadService } from "@/services/upload-service";
 import type React from "react";
 import { useState } from "react";
@@ -69,6 +70,7 @@ export default function ReconciliationDashboard() {
                         downloadReport={handleDownloadReport}
                     />
                 )}
+                {isSubmitting && <TerminalAnimated />}
             </main>
         </div>
     );
