@@ -1,5 +1,6 @@
 // components/FileUploadSection.tsx
 "use client";
+import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -96,9 +97,10 @@ export function FileUploadSection({
                             className='w-full bg-orange hover:bg-orange/90 text-white font-medium py-3 text-base'
                             size='lg'
                         >
+                            {isSubmitting && <Loader />}
                             {isSubmitting
                                 ? "Processando..."
-                                : "Enviar para Processamento"}
+                                : `Enviar para Processamento`}
                         </Button>
                     </CardContent>
                 </Card>
